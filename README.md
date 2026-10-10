@@ -3,17 +3,12 @@
 
 > Note: ARCHFETCH is only actively tested on x86-64 and aarch64 platforms. It may work on other platforms but is not guaranteed to do so.
 
-<img src="screenshots/example1.png" width="49%" align="left" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png" width="49%" height="16px" align="left" />
-<img src="screenshots/example4.png" width="49%" align="left" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png" width="49%" height="16px" align="left" />
-<img src="screenshots/example2.png" width="48%" align="top" />
-<img src="screenshots/example3.png" width="48%" align="top" />
-<img src="screenshots/example5.png" height="15%" align="top" />
+<img width="42%" align="left" alt="image" src="https://github.com/user-attachments/assets/20762345-6e58-4848-9110-66d7a0a4004b" />
+<img width="50%" align="top" alt="image" src="https://github.com/user-attachments/assets/09403b9b-38d5-463e-b6d3-dfb79a4ee0d8" />
+<div height=10px width=100%>archfetch </div>
+<img width="70%" align="left" alt="image" src="https://github.com/user-attachments/assets/365eaf17-9058-46dd-b25f-bbe3f064347c" />
+<img width="28%" align="top" alt="image" src="https://github.com/user-attachments/assets/92f48d17-5457-40b3-a35a-20c9f7395535" />
 
-According configuration files for examples are located [here](https://github.com/fastfetch-cli/fastfetch/tree/dev/presets/examples).
-
-There are [screenshots on different platforms](https://github.com/fastfetch-cli/fastfetch/wiki).
 
 ## Installation
 
