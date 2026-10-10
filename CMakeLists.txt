@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21.0) # C_STANDARD C17 and C23
 
-project(fastfetch
+project(archfetch
     VERSION 2.70.0
     LANGUAGES C
     DESCRIPTION "Fast neofetch-like system information tool"
@@ -2257,20 +2257,20 @@ endif()
 # Executable targets #
 ######################
 
-add_executable(fastfetch
+add_executable(${PROJECT_NAME}
     src/fastfetch.c
 )
-target_compile_definitions(fastfetch
-    PRIVATE FASTFETCH_TARGET_BINARY_NAME=fastfetch
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE FASTFETCH_TARGET_BINARY_NAME=${PROJECT_NAME}
 )
-target_link_libraries(fastfetch
+target_link_libraries(${PROJECT_NAME}
     PRIVATE libfastfetch
 )
 
 # Prevent fastfetch from linking to libstdc++
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
-set_target_properties(fastfetch PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
 
 if(WIN32)
     # version.rc embeds manifest.xml (RT_MANIFEST) and logo.ico (ICON) as *resource
@@ -2282,26 +2282,26 @@ if(WIN32)
         "${CMAKE_CURRENT_SOURCE_DIR}/src/common/windows/manifest.xml"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/common/windows/logo.ico"
     )
-    target_sources(fastfetch
+    target_sources(${PROJECT_NAME}
         PRIVATE src/common/windows/version.rc
     )
 elseif(APPLE)
-    target_link_options(fastfetch
+    target_link_options(${PROJECT_NAME}
         PRIVATE LINKER:-sectcreate,__TEXT,__info_plist,Info.plist
     )
     # `LINKER:` options are handed to ld verbatim and are not registered as build
     # dependencies, so without this ninja never relinks when Info.plist changes.
-    set_property(TARGET fastfetch APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
+    set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
     # ld derives the ad-hoc code-signing identifier from the output file name and
     # ignores the embedded CFBundleIdentifier, so set it explicitly.
-    add_custom_command(TARGET fastfetch POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND codesign --force --sign - --identifier "${FASTFETCH_BUNDLE_ID}" "$<TARGET_FILE:fastfetch>"
         VERBATIM
     )
 endif()
 
 if(BINARY_LINK_TYPE STREQUAL "static")
-    target_link_options(fastfetch PRIVATE "-static")
+    target_link_options(${PROJECT_NAME} PRIVATE "-static")
 endif()
 
 # Apply all above parameters to flashfetch if it is built
@@ -2499,7 +2499,7 @@ endif()
 include(GNUInstallDirs)
 
 install(
-    TARGETS fastfetch
+    TARGETS ${PROJECT_NAME}
     DESTINATION "${CMAKE_INSTALL_BINDIR}"
 )
 
@@ -2511,19 +2511,19 @@ if (TARGET flashfetch)
 endif()
 
 install(
-    FILES "${CMAKE_SOURCE_DIR}/completions/${CMAKE_PROJECT_NAME}.bash"
+    FILES "${CMAKE_SOURCE_DIR}/completions/${PROJECT_NAME}.bash"
     DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/bash-completion/completions"
     RENAME "${CMAKE_PROJECT_NAME}"
 )
 
 install(
-    FILES "${CMAKE_SOURCE_DIR}/completions/${CMAKE_PROJECT_NAME}.zsh"
+    FILES "${CMAKE_SOURCE_DIR}/completions/${PROJECT_NAME}.zsh"
     DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/zsh/site-functions"
     RENAME "_${CMAKE_PROJECT_NAME}"
 )
 
 install(
-    FILES "${CMAKE_SOURCE_DIR}/completions/${CMAKE_PROJECT_NAME}.fish"
+    FILES "${CMAKE_SOURCE_DIR}/completions/${PROJECT_NAME}.fish"
     DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/fish/vendor_completions.d"
     RENAME "${CMAKE_PROJECT_NAME}.fish"
 )
